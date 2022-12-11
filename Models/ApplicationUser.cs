@@ -1,6 +1,8 @@
-﻿namespace Drinks_app.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Drinks_app.Models
 {
-    public class ApplicationUser
+    public class ApplicationUser : IdentityUser
     {
     }
 }
