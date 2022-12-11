@@ -10,11 +10,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using ContactsAppAPI.Authentication.Models;
-using ContactsAppAPI.Models;
-using Microsoft.AspNetCore.Authorization;
-using Drinks_app.Models.Authentication;
 using Drinks_app.Models;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace ContactsAppAPI.Controllers
 {
