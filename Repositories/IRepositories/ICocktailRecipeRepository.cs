@@ -5,10 +5,10 @@ namespace Drinks_app.Repositories.IRepositories
 {
     public interface ICocktailRecipeRepository
     {
-        CocktailRecipe UpdateCocktailRecipe(CocktailRecipe cocktailRecipe);
-        CocktailRecipe GetCocktailRecipe(long id);
+        void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe);
+        CocktailRecipe GetCocktailRecipeById(long id);
         IEnumerable<CocktailRecipe> GetAllCocktailRecipe();
         void CreateCocktailRecipe(CocktailRecipe cocktailRecipe);
-        void DeleteCocktailRecipe(CocktailRecipe cocktailRecipe);
+        void DeleteCocktailRecipe(long id);
     }
 }

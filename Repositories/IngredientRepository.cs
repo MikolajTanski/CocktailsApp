@@ -1,7 +1,9 @@
 ﻿using Drinks_app.Data;
 using Drinks_app.Models;
 using Drinks_app.Repositories.IRepositories;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Drinks_app.Repositories
 {
@@ -15,27 +17,33 @@ namespace Drinks_app.Repositories
         }
         public void CreateIngredient(Ingredient ingredient)
         {
-            throw new System.NotImplementedException();
+            _db.Ingredients.Add(ingredient);
+            _db.SaveChanges();
         }
 
-        public void DeleteIngredient(Ingredient ingredient)
+        public void DeleteIngredient(long id)
         {
-            throw new System.NotImplementedException();
+            var ingredients = _db.Ingredients.Find(id);
+            if (ingredients != null) _db.Ingredients.Remove(ingredients);
+            _db.SaveChanges();
         }
 
         public IEnumerable<Ingredient> GetAllIngredient()
         {
-            throw new System.NotImplementedException();
+            var ingredients = _db.Ingredients.ToList();
+            return ingredients;
         }
 
-        public Ingredient GetIngredient(long id)
+        public Ingredient GetIngredientById(long id)
         {
-            throw new System.NotImplementedException();
+            var ingredients = _db.Ingredients.Find(id);
+            return ingredients;
         }
 
-        public Ingredient UpdateIngredient(Ingredient ingredient)
+        public void UpdateIngredient(Ingredient ingredient)
         {
-            throw new System.NotImplementedException();
+            _db.Entry(ingredient).State = EntityState.Modified;
+            _db.SaveChanges();
         }
     }
 }

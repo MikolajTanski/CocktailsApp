@@ -1,34 +1,50 @@
-﻿using Drinks_app.Models;
+﻿using Drinks_app.Data;
+using Drinks_app.Models;
 using Drinks_app.Repositories.IRepositories;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Drinks_app.Repositories
 {
     public class CocktailRecipeRepository : ICocktailRecipeRepository
     {
+        private readonly ApplicationDbContext _db;
+
+        public CocktailRecipeRepository(ApplicationDbContext db)
+        {
+            _db = db;
+        }
         public void CreateCocktailRecipe(CocktailRecipe cocktailRecipe)
         {
-            throw new System.NotImplementedException();
+            _db.CocktailRecipes.Add(cocktailRecipe);
+            _db.SaveChanges();
+
         }
 
-        public void DeleteCocktailRecipe(CocktailRecipe cocktailRecipe)
+        public void DeleteCocktailRecipe(long id)
         {
-            throw new System.NotImplementedException();
+            var cocktailRecipe = _db.CocktailRecipes.Find(id);
+            if (cocktailRecipe != null) _db.CocktailRecipes.Remove(cocktailRecipe);
+            _db.SaveChanges();
         }
 
         public IEnumerable<CocktailRecipe> GetAllCocktailRecipe()
         {
-            throw new System.NotImplementedException();
+            var cocktailRecipe = _db.CocktailRecipes.ToList();
+            return cocktailRecipe;
         }
 
-        public CocktailRecipe GetCocktailRecipe(long id)
+        public CocktailRecipe GetCocktailRecipeById(long id)
         {
-            throw new System.NotImplementedException();
+            var cocktailRecipe = _db.CocktailRecipes.Find(id);
+            return cocktailRecipe;
         }
 
-        public CocktailRecipe UpdateCocktailRecipe(CocktailRecipe cocktailRecipe)
+        public void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe)
         {
-            throw new System.NotImplementedException();
+            _db.Entry(cocktailRecipe).State = EntityState.Modified;
+            _db.SaveChanges();
         }
     }
 }

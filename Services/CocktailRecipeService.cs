@@ -15,27 +15,29 @@ namespace Drinks_app.Services
 
         public void CreateCocktailRecipe(CocktailRecipe cocktailRecipe)
         {
-            throw new System.NotImplementedException();
+            _cocktailRecipeRepository.CreateCocktailRecipe(cocktailRecipe);
         }
 
-        public void DeleteCocktailRecipe(CocktailRecipe cocktailRecipe)
+        public void DeleteCocktailRecipe(long id)
         {
-            throw new System.NotImplementedException();
+            _cocktailRecipeRepository.DeleteCocktailRecipe(id);
         }
 
         public IEnumerable<CocktailRecipe> GetAllCocktailRecipe()
         {
-            throw new System.NotImplementedException();
+            var result = _cocktailRecipeRepository.GetAllCocktailRecipe();
+            return result;
         }
 
-        public CocktailRecipe GetCocktailRecipe(long id)
+        public CocktailRecipe GetCocktailRecipeById(long id)
         {
-            throw new System.NotImplementedException();
+            var result = _cocktailRecipeRepository.GetCocktailRecipeById(id);
+            return result;
         }
 
         public void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe)
         {
-            throw new System.NotImplementedException();
+            _cocktailRecipeRepository.UpdateCocktailRecipe(cocktailRecipe);
         }
     }
 }

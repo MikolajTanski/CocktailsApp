@@ -15,27 +15,29 @@ namespace Drinks_app.Services
 
         public void CreateIngredient(Ingredient ingredient)
         {
-            throw new System.NotImplementedException();
+            _ingredientRepository.CreateIngredient(ingredient);
         }
 
-        public void DeleteIngredient(Ingredient ingredient)
+        public void DeleteIngredient(long id)
         {
-            throw new System.NotImplementedException();
+            _ingredientRepository.DeleteIngredient(id);
         }
 
         public IEnumerable<Ingredient> GetAllIngredient()
         {
-            throw new System.NotImplementedException();
+            var result = _ingredientRepository.GetAllIngredient();
+            return result;
         }
 
-        public Ingredient GetIngredient(long id)
+        public Ingredient GetIngredientById(long id)
         {
-            throw new System.NotImplementedException();
+            var result = _ingredientRepository.GetIngredientById(id);
+            return result;
         }
 
         public void UpdateIngredient(Ingredient ingredient)
         {
-            throw new System.NotImplementedException();
+            _ingredientRepository.UpdateIngredient(ingredient);
         }
     }
 }

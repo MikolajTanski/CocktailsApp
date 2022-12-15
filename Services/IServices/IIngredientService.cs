@@ -5,10 +5,10 @@ namespace Drinks_app.Services.IServices
 {
     public interface IIngredientService
     {
-        Ingredient GetIngredient(long id);
+        Ingredient GetIngredientById(long id);
         IEnumerable<Ingredient> GetAllIngredient();
         void CreateIngredient(Ingredient ingredient);
-        void DeleteIngredient(Ingredient ingredient);
+        void DeleteIngredient(long id);
         void UpdateIngredient(Ingredient ingredient);
     }
 }

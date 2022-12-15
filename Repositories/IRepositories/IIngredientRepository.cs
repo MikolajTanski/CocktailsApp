@@ -5,10 +5,10 @@ namespace Drinks_app.Repositories.IRepositories
 {
     public interface IIngredientRepository
     {
-        Ingredient UpdateIngredient(Ingredient ingredient);
-        Ingredient GetIngredient(long id);
+        void UpdateIngredient(Ingredient ingredient);
+        Ingredient GetIngredientById(long id);
         IEnumerable<Ingredient> GetAllIngredient();
         void CreateIngredient(Ingredient ingredient);
-        void DeleteIngredient(Ingredient ingredient);
+        void DeleteIngredient(long id);
     }
 }

@@ -5,10 +5,10 @@ namespace Drinks_app.Services.IServices
 {
     public interface ICocktailRecipeService
     {
-        CocktailRecipe GetCocktailRecipe(long id);
+        CocktailRecipe GetCocktailRecipeById(long id);
         IEnumerable<CocktailRecipe> GetAllCocktailRecipe();
         void CreateCocktailRecipe(CocktailRecipe cocktailRecipe);
-        void DeleteCocktailRecipe(CocktailRecipe cocktailRecipe);
+        void DeleteCocktailRecipe(long id);
         void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe);
     }
 }
