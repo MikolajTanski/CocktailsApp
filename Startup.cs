@@ -38,7 +38,7 @@ namespace Drinks_app
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Drinks_app", Version = "v1" });
             });
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaulConnectionMikolaj")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaulConnection")));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
