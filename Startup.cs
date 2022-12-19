@@ -39,7 +39,7 @@ namespace Drinks_app
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CocktailsApp", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "UniversityCocktailsApp", Version = "v1" });
             });
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
