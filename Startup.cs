@@ -1,9 +1,9 @@
 using Drinks_app.Data;
 using Drinks_app.Models;
-using Drinks_app.Repositories;
-using Drinks_app.Repositories.IRepositories;
 using Drinks_app.Services;
 using Drinks_app.Services.IServices;
+using Drinks_app.Repositories;
+using Drinks_app.Repositories.IRepositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,21 +29,20 @@ namespace Drinks_app
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ICocktailRecipeService, CocktailRecipeService>();
             services.AddScoped<IIngredientService, IngredientService>();
             services.AddScoped<ICocktailRecipeRepository, CocktailRecipeRepository>();
             services.AddScoped<IIngredientRepository, IngredientRepository>();
-            //services.AddScoped<IngredientService, IngredientsController>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Drinks_app", Version = "v1" });
             });
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaulConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -75,7 +74,6 @@ namespace Drinks_app
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
