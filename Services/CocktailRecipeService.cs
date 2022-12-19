@@ -1,5 +1,5 @@
 ﻿using Drinks_app.Models;
-using Drinks_app.Repositories;
+using Drinks_app.Repositories.IRepositories;
 using Drinks_app.Services.IServices;
 using System.Collections.Generic;
 
@@ -7,8 +7,8 @@ namespace Drinks_app.Services
 {
     public class CocktailRecipeService : ICocktailRecipeService
     {
-        private readonly CocktailRecipeRepository _cocktailRecipeRepository;
-        public CocktailRecipeService(CocktailRecipeRepository cocktailRecipeRepository)
+        private readonly ICocktailRecipeRepository _cocktailRecipeRepository;
+        public CocktailRecipeService(ICocktailRecipeRepository cocktailRecipeRepository)
         {
             _cocktailRecipeRepository = cocktailRecipeRepository;
         }
