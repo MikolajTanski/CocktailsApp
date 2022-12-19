@@ -1,5 +1,6 @@
 ﻿using Drinks_app.Models;
-using Drinks_app.Services;
+using Drinks_app.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -10,9 +11,9 @@ namespace Drinks_app.Controllers
     [ApiController]
     public class IngredientsController : ControllerBase
     {
-        private readonly IngredientService _ingredientService;
+        private readonly IIngredientService _ingredientService;
 
-        public IngredientsController(IngredientService ingredientService)
+        public IngredientsController(IIngredientService ingredientService)
         {
             _ingredientService = ingredientService;
         }
@@ -21,6 +22,7 @@ namespace Drinks_app.Controllers
         [HttpGet]
         public IEnumerable<Ingredient> Get()
         {
+            
             var result = _ingredientService.GetAllIngredient();
             return result;
         }
@@ -35,9 +37,10 @@ namespace Drinks_app.Controllers
 
         // POST api/<IngredientsController>
         [HttpPost]
+        [Authorize]
         public void Post([FromBody] Ingredient ingredient)
         {
-            _ingredientService.UpdateIngredient(ingredient);
+            _ingredientService.CreateIngredient(ingredient);
         }
 
         // PUT api/<IngredientsController>
