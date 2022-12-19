@@ -1,5 +1,9 @@
 using Drinks_app.Data;
 using Drinks_app.Models;
+using Drinks_app.Repositories;
+using Drinks_app.Repositories.IRepositories;
+using Drinks_app.Services;
+using Drinks_app.Services.IServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,10 +32,11 @@ namespace Drinks_app
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddScoped<ICocktailRecipeService, CocktailRecipeService>();
-            //services.AddScoped<IIngredientService, IngredientService>();
-            //services.AddScoped<ICocktailRecipeRepository, CocktailRecipeRepository>();
-            //services.AddScoped<IIngredientRepository, IngredientRepository>();
+            services.AddScoped<ICocktailRecipeService, CocktailRecipeService>();
+            services.AddScoped<IIngredientService, IngredientService>();
+            services.AddScoped<ICocktailRecipeRepository, CocktailRecipeRepository>();
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
+            //services.AddScoped<IngredientService, IngredientsController>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
