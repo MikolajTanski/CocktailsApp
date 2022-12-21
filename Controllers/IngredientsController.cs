@@ -2,6 +2,7 @@
 using Drinks_app.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace Drinks_app.Controllers
@@ -36,11 +37,18 @@ namespace Drinks_app.Controllers
         }
 
         // POST api/<IngredientsController>
-        [HttpPost]
         [Authorize]
-        public void Post([FromBody] Ingredient ingredient)
+        [HttpPost]
+        public ActionResult Post([FromBody] Ingredient ingredient)
         {
-            _ingredientService.CreateIngredient(ingredient);
+            try
+            {
+                _ingredientService.CreateIngredient(ingredient);
+            } catch(Exception e)
+            {
+                return StatusCode(500, "error occured");
+            }
+            return StatusCode(200, "ingredient added");
         }
 
         // PUT api/<IngredientsController>
