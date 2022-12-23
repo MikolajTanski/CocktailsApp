@@ -21,9 +21,9 @@ namespace Drinks_app.Controllers
 
         // GET: api/<IngredientsController>
         [HttpGet]
-        public IEnumerable<Ingredient> Get()
+        public IEnumerable<Ingredient> GetAll()
         {
-            
+
             var result = _ingredientService.GetAllIngredient();
             return result;
         }
@@ -52,10 +52,10 @@ namespace Drinks_app.Controllers
         }
 
         // PUT api/<IngredientsController>
-        [HttpPut("{id}")]
+        [HttpPut]
         public void Put([FromBody] Ingredient ingredient)
         {
-            _ingredientService.CreateIngredient(ingredient);
+            _ingredientService.UpdateIngredient(ingredient);
         }
 
         // DELETE api/<IngredientsController>/5
