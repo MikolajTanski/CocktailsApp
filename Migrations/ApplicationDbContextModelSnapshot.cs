@@ -15,9 +15,9 @@ namespace Drinks_app.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.17")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Drinks_app.Models.ApplicationUser", b =>
                 {
@@ -89,7 +89,7 @@ namespace Drinks_app.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -112,17 +112,17 @@ namespace Drinks_app.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<long?>("CocktailRecipeId")
-                        .HasColumnType("bigint");
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("cocktailRecipeId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CocktailRecipeId");
+                    b.HasIndex("cocktailRecipeId");
 
                     b.ToTable("Ingredients");
                 });
@@ -159,7 +159,7 @@ namespace Drinks_app.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -183,7 +183,7 @@ namespace Drinks_app.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -269,9 +269,11 @@ namespace Drinks_app.Migrations
 
             modelBuilder.Entity("Drinks_app.Models.Ingredient", b =>
                 {
-                    b.HasOne("Drinks_app.Models.CocktailRecipe", null)
+                    b.HasOne("Drinks_app.Models.CocktailRecipe", "cocktailRecipe")
                         .WithMany("Ingredients")
-                        .HasForeignKey("CocktailRecipeId");
+                        .HasForeignKey("cocktailRecipeId");
+
+                    b.Navigation("cocktailRecipe");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
