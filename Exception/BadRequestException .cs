@@ -1,6 +1,12 @@
-﻿namespace Drinks_app.Exception
+﻿using System;
+
+namespace Drinks_app.Exception
 {
-    public class Class2
+    public class BadRequestException : SystemException
     {
+        public BadRequestException(string message) : base(message)
+        {
+
+        }
     }
 }
