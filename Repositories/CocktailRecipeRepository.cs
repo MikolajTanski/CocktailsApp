@@ -22,29 +22,31 @@ namespace Drinks_app.Repositories
 
         }
 
-        public void DeleteCocktailRecipe(long id)
+        
+        public void DeleteCocktailRecipe(string Recipe r)
         {
-            var cocktailRecipe = _db.CocktailRecipes.Find(id);
-            if (cocktailRecipe != null) _db.CocktailRecipes.Remove(cocktailRecipe);
-            _db.SaveChanges();
-        }
-
-        public IEnumerable<CocktailRecipe> GetAllCocktailRecipe()
-        {
-            var cocktailRecipe = _db.CocktailRecipes.ToList();
-            return cocktailRecipe;
-        }
-
-        public CocktailRecipe GetCocktailRecipeById(long id)
-        {
-            var cocktailRecipe = _db.CocktailRecipes.Find(id);
-            return cocktailRecipe;
-        }
-
-        public void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe)
-        {
-            _db.Entry(cocktailRecipe).State = EntityState.Modified;
-            _db.SaveChanges();
-        }
+        var DeleteCocktailRecipe = from recipe 
+                                   in CocktailRecipes
+                                   where recipe.Id == r.Id
+                                   select recipe;
+        db.CocktailRecipes.DeletOnSubmit(DeleteCocktailRecipe);
     }
+    
+        var cocktailRecipe = from CocktailRecipeAll 
+                         in CocktailRecipes
+                         select CocktailRecipeAll;
+
+    public CocktailRecipe GetCocktailRecipeById(CocktailRecipe c)
+    var GetCocktailRecipeById = from i
+                                in CocktailRecipe
+                                where i.Id == c.Id 
+
+
+    var UpdateCocktailRecipe = from updateRecipe
+                               in CocktailRecipes
+                               where updateRecipe.Name == cocktailRecipe.Name
+                               select updateRecipe;
+    UpdateCocktailRecipe.is_dafault = false;
+    Context.SaveChanges();
+}
 }
