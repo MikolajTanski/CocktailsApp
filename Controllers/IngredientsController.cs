@@ -44,7 +44,7 @@ namespace Drinks_app.Controllers
             try
             {
                 _ingredientService.CreateIngredient(ingredient);
-            } catch(Exception e)
+            } catch(System.Exception e)
             {
                 return StatusCode(500, "error occured");
             }
