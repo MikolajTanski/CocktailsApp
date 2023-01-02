@@ -31,7 +31,7 @@ namespace Drinks_app.Repositories
 
         public IEnumerable<CocktailRecipe> GetAllCocktailRecipe()
         {
-            var cocktailRecipe = _db.CocktailRecipes.ToList();
+            var cocktailRecipe = _db.CocktailRecipes.Include(r => r.User).ToList();
             return cocktailRecipe;
         }
 
