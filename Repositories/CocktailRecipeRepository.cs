@@ -3,6 +3,7 @@ using Drinks_app.Models;
 using Drinks_app.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Drinks_app.Repositories
@@ -22,31 +23,55 @@ namespace Drinks_app.Repositories
 
         }
 
-        
-        public void DeleteCocktailRecipe(string Recipe r)
+        //[DataObjectMethod(DataObjectMethodType.Delete)]
+        public void DeleteCocktailRecipe(long id)
         {
-        var DeleteCocktailRecipe = from recipe 
-                                   in CocktailRecipes
-                                   where recipe.Id == r.Id
-                                   select recipe;
-        db.CocktailRecipes.DeletOnSubmit(DeleteCocktailRecipe);
-    }
-    
-        var cocktailRecipe = from CocktailRecipeAll 
-                         in CocktailRecipes
-                         select CocktailRecipeAll;
+            //using (var db = _db.CocktailRecipes()) {
+                var DeleteCocktailRecipe = from recipe
+                                           in _db.CocktailRecipes
+                                           where recipe.Id == id
+                                           select recipe;
+                if (DeleteCocktailRecipe != null)
+                {
+                    _db.CocktailRecipes.Remove((CocktailRecipe)DeleteCocktailRecipe);
+                    _db.SaveChanges();
+                }
+            //}
+        }
+        public IEnumerable<CocktailRecipe> GetAllCocktailRecipe() { 
+            var AllCocktailRecipe = from CocktailRecipeAll
+                             in _db.CocktailRecipes
+                                    select CocktailRecipeAll;
+            return AllCocktailRecipe;
+        }
+        public CocktailRecipe GetCocktailRecipeById(long id)
+        {
 
-    public CocktailRecipe GetCocktailRecipeById(CocktailRecipe c)
-    var GetCocktailRecipeById = from i
-                                in CocktailRecipe
-                                where i.Id == c.Id 
+            var GetCocktailRecipeById = from i
+                                        in _db.CocktailRecipes
+                                        where i.Id == id
+                                        select i;
 
+            return this.GetCocktailRecipeById(id);
+            
+        }
+        public void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe)
+        {
 
-    var UpdateCocktailRecipe = from updateRecipe
-                               in CocktailRecipes
-                               where updateRecipe.Name == cocktailRecipe.Name
-                               select updateRecipe;
-    UpdateCocktailRecipe.is_dafault = false;
-    Context.SaveChanges();
+            var UpdateCocktailRecipe = from updateRecipe
+                                   in _db.CocktailRecipes
+                                       where updateRecipe.Name == cocktailRecipe.Name
+                                       select updateRecipe;
+            foreach(CocktailRecipe recip in UpdateCocktailRecipe)
+            {
+                recip.Name = new CocktailRecipe().Name;
+                recip.Recipe = new CocktailRecipe().Recipe;
+            }
+            _db.SaveChanges();
+            //UpdateCocktailRecipe.is_default = false;
+            //Context.SaveChanges();
+        }
+    } 
 }
-}
+
+
