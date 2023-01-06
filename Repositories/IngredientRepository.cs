@@ -24,20 +24,38 @@ namespace Drinks_app.Repositories
 
         public void DeleteIngredient(long id)
         {
-            var ingredients = _db.Ingredients.Find(id);
-            if (ingredients != null) _db.Ingredients.Remove(ingredients);
+            var deleteingredients = (from r
+                                     in _db.Ingredients
+                                     where r.Id == id
+                                     select r).
+                                     FirstOrDefault();
+                                     
+            if (deleteingredients != null)
+            {
+                _db.Ingredients.Remove(deleteingredients);
+            }
             _db.SaveChanges();
         }
 
         public IEnumerable<Ingredient> GetAllIngredient()
         {
-            var ingredients = _db.Ingredients.ToList();
-            return ingredients;
+            var allingredients = from c
+                                 in _db.Ingredients
+                                 select new Ingredient
+                                 {
+                                     Id = c.Id,
+                                     Name = c.Name
+
+                                 };
+            return allingredients;
         }
 
         public Ingredient GetIngredientById(long id)
         {
-            var ingredients = _db.Ingredients.Find(id);
+            var ingredients = (from i
+                               in _db.Ingredients
+                               where i.Id == id
+                               select i).FirstOrDefault();
             return ingredients;
         }
         public Ingredient GetIngredientByName(string name)
@@ -47,7 +65,14 @@ namespace Drinks_app.Repositories
 
         public void UpdateIngredient(Ingredient ingredient)
         {
-            _db.Entry(ingredient).State = EntityState.Modified;
+            var updateIngredient = from u
+                                   in _db.Ingredients
+                                   where u.Id == ingredient.Id
+                                   select u;
+            foreach(Ingredient i in updateIngredient)
+            {
+                i.Name = ingredient.Name;
+            }
             _db.SaveChanges();
         }
 
