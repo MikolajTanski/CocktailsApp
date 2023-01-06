@@ -3,6 +3,7 @@ using Drinks_app.Models;
 using Drinks_app.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Drinks_app.Repositories
@@ -39,11 +40,27 @@ namespace Drinks_app.Repositories
             var ingredients = _db.Ingredients.Find(id);
             return ingredients;
         }
+        public Ingredient GetIngredientByName(string name)
+        {
+            return _db.Ingredients.Where(i => i.Name == name).FirstOrDefault();
+        }
 
         public void UpdateIngredient(Ingredient ingredient)
         {
             _db.Entry(ingredient).State = EntityState.Modified;
             _db.SaveChanges();
+        }
+
+        public IEnumerable<Ingredient> GetIngredientsFromString(string IngredientsString)
+        {
+            IEnumerable<Ingredient> Ingredients = new Collection<Ingredient>();
+            string[] IngredientsArr = IngredientsString.Split(",").Select(i => i.Trim()).ToArray();
+            foreach(string IngredientName in IngredientsArr)
+            {
+                Ingredients.Append(this.GetIngredientByName(IngredientName));
+            }
+
+            return Ingredients;
         }
     }
 }

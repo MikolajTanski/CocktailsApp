@@ -1,4 +1,5 @@
 ﻿using Drinks_app.Models;
+using Drinks_app.Models.DTO;
 using System.Collections.Generic;
 
 namespace Drinks_app.Services.IServices
@@ -7,8 +8,8 @@ namespace Drinks_app.Services.IServices
     {
         CocktailRecipe GetCocktailRecipeById(long id);
         IEnumerable<CocktailRecipe> GetAllCocktailRecipe();
-        void CreateCocktailRecipe(CocktailRecipe cocktailRecipe);
+        void CreateCocktailRecipe(CocktailRecipeDto cocktailRecipeDto);
         void DeleteCocktailRecipe(long id);
-        void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe);
+        void UpdateCocktailRecipe(CocktailRecipeDto cocktailRecipeDto);
     }
 }

@@ -39,20 +39,21 @@ namespace Drinks_app.Repositories
             //}
         }
 
-        public IEnumerable<CocktailRecipe> GetAllCocktailRecipe() { 
-           var AllCocktailRecipe = from c
-                             in _db.CocktailRecipes
-                             join u in _db.Users on c.User.Id equals u.Id
-                             select new CocktailRecipe
-                             {
-                                 Id = c.Id,
-                                 Name = c.Name,
-                                 Recipe = c.Recipe,
-                                 User = u,
-                             };
-            return AllCocktailRecipe;
+
+        public IEnumerable<CocktailRecipe> GetAllCocktailRecipe()
+        {
+            var AllCocktailRecipes = from c in _db.CocktailRecipes
+                                     select new CocktailRecipe
+                                     {
+                                         Id = c.Id,
+                                         Name = c.Name,
+                                         Recipe = c.Recipe,
+                                         User = c.User,
+                                     };
+            return AllCocktailRecipes;
         }
-        public CocktailRecipe GetCocktailRecipeById(long id)
+
+            public CocktailRecipe GetCocktailRecipeById(long id)
         {
 
             var GetCocktailRecipeById = from i
