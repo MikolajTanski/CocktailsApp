@@ -1,5 +1,6 @@
 ﻿using Drinks_app.Models;
-using Drinks_app.Repositories.IRepositories;
+using Drinks_app.Models.DTO;
+using Drinks_app.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -12,11 +13,11 @@ namespace Drinks_app.Controllers
     [ApiController]
     public class CocktailRecipesController : ControllerBase
     {
-        private readonly ICocktailRecipeRepository _cocktailRecipeRepository;
+        private readonly ICocktailRecipeService _cocktailRecipeService;
 
-        public CocktailRecipesController(ICocktailRecipeRepository cocktailRecipeRepository)
+        public CocktailRecipesController(ICocktailRecipeService cocktailRecipeService)
         {
-            _cocktailRecipeRepository = cocktailRecipeRepository;
+            _cocktailRecipeService = cocktailRecipeService;
         }
 
         // GET: api/<CocktailRecipesController>
@@ -24,7 +25,7 @@ namespace Drinks_app.Controllers
         public IEnumerable<CocktailRecipe> GetAll()
         {
 
-            var result = _cocktailRecipeRepository.GetAllCocktailRecipe();
+            var result = _cocktailRecipeService.GetAllCocktailRecipe();
             return result;
         }
 
@@ -32,30 +33,30 @@ namespace Drinks_app.Controllers
         [HttpGet("{id}")]
         public CocktailRecipe Get(int id)
         {
-            var result = _cocktailRecipeRepository.GetCocktailRecipeById(id);
+            var result = _cocktailRecipeService.GetCocktailRecipeById(id);
             return result;
         }
 
         // POST api/<CocktailRecipesController>
         [HttpPost]
         [Authorize]
-        public void Post([FromBody] CocktailRecipe cocktailRecipe)
+        public void Post([FromBody] CocktailRecipeDto cocktailRecipeDto)
         {
-            _cocktailRecipeRepository.CreateCocktailRecipe(cocktailRecipe);
+            _cocktailRecipeService.CreateCocktailRecipe(cocktailRecipeDto);
         }
 
         // PUT api/<CocktailRecipesController>
         [HttpPut]
-        public void Put([FromBody] CocktailRecipe cocktailRecipe)
+        public void Put([FromBody] CocktailRecipeDto cocktailRecipe)
         {
-            _cocktailRecipeRepository.UpdateCocktailRecipe(cocktailRecipe);
+            _cocktailRecipeService.UpdateCocktailRecipe(cocktailRecipe);
         }
 
         // DELETE api/<CocktailRecipesController>/5
         [HttpDelete("{id}")]
         public void Delete(long id)
         {
-            _cocktailRecipeRepository.DeleteCocktailRecipe(id);
+            _cocktailRecipeService.DeleteCocktailRecipe(id);
         }
     }
 }
