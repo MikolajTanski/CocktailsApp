@@ -2,9 +2,9 @@
 {
     public class CocktailRecipeDto
     {
-        string Name { get; set; }
-        string Recipe { get; set; }
-        string userEmail { get; set; }
-        string Ingredients { get; set; }
+        public string Name { get; set; }
+        public string Recipe { get; set; }
+        public string userEmail { get; set; }
+        public string Ingredients { get; set; }
     }
 }
