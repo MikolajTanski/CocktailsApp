@@ -50,12 +50,21 @@ namespace Drinks_app.Repositories
             _db.Entry(ingredient).State = EntityState.Modified;
             _db.SaveChanges();
         }
+        public void AddMissingIngredients(ICollection<Ingredient> ingredients)
+        {
+            var knownIngredients = this.GetAllIngredient().ToList();
+            var missingIngredients = ingredients.Except(knownIngredients).ToList();
+            foreach(var ingredient in missingIngredients)
+            {
+                this.CreateIngredient(ingredient);
+            }
+        }
 
         public IEnumerable<Ingredient> GetIngredientsFromString(string IngredientsString)
         {
             IEnumerable<Ingredient> Ingredients = new Collection<Ingredient>();
             string[] IngredientsArr = IngredientsString.Split(",").Select(i => i.Trim()).ToArray();
-            foreach(string IngredientName in IngredientsArr)
+            foreach (string IngredientName in IngredientsArr)
             {
                 Ingredients.Append(this.GetIngredientByName(IngredientName));
             }

@@ -34,11 +34,12 @@ namespace Drinks_app.Services
             var newCocktailRecipe = new CocktailRecipe
             {
                 Name = dto.Name,
-                Recipe = dto.Recipe, 
+                Recipe = dto.Recipe,
                 Ingredients = ingredients,
                 User = currentUser
             };
             _cocktailRecipeRepository.CreateCocktailRecipe(newCocktailRecipe);
+            _ingredientRepository.AddMissingIngredients(ingredients);
         }
 
         public void DeleteCocktailRecipe(long id)

@@ -10,6 +10,7 @@ namespace Drinks_app.Repositories.IRepositories
         IEnumerable<Ingredient> GetAllIngredient();
         IEnumerable<Ingredient> GetIngredientsFromString(string IngredientsString);
         void CreateIngredient(Ingredient ingredient);
+        void AddMissingIngredients(ICollection<Ingredient> ingredients);
         void DeleteIngredient(long id);
     }
 }

@@ -12,6 +12,7 @@ namespace Drinks_app.Repositories
     {
         private readonly ApplicationDbContext _db;
 
+
         public CocktailRecipeRepository(ApplicationDbContext db)
         {
             _db = db;
@@ -20,8 +21,9 @@ namespace Drinks_app.Repositories
         {
             _db.CocktailRecipes.Add(cocktailRecipe);
             _db.SaveChanges();
-
         }
+
+        
 
         //[DataObjectMethod(DataObjectMethodType.Delete)]
         public void DeleteCocktailRecipe(long id)
@@ -56,12 +58,14 @@ namespace Drinks_app.Repositories
             public CocktailRecipe GetCocktailRecipeById(long id)
         {
 
-            var GetCocktailRecipeById = from i
+            var getCocktailRecipeById = (from c
                                         in _db.CocktailRecipes
-                                        where i.Id == id
-                                        select i;
+                                        where c.Id == id
+                                        select c)
+                                        .Include(c => c.User).FirstOrDefault();
 
-            return this.GetCocktailRecipeById(id);
+
+            return getCocktailRecipeById;
             
         }
         public void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe)
