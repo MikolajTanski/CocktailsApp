@@ -33,8 +33,10 @@ namespace Drinks_app.Repositories
                                            select recipe;
                 if (DeleteCocktailRecipe != null)
                 {
-                    _db.CocktailRecipes.Remove((CocktailRecipe)DeleteCocktailRecipe);
-                    _db.SaveChanges();
+                _db.CocktailRecipes.Remove((CocktailRecipe)DeleteCocktailRecipe);
+              
+                _db.SaveChanges();
+
                 }
             //}
         }
@@ -57,10 +59,16 @@ namespace Drinks_app.Repositories
 
             var GetCocktailRecipeById = from i
                                         in _db.CocktailRecipes
+                                        join u in _db.Users on i.User.Id equals u.Id
                                         where i.Id == id
-                                        select i;
-
-            return this.GetCocktailRecipeById(id);
+                                        select new CocktailRecipe
+                                        {
+                                            Id = i.Id,
+                                            Name = i.Name,
+                                            Recipe = i.Recipe,
+                                            User = u,
+                                        };
+            return (CocktailRecipe)GetCocktailRecipeById;
             
         }
         public void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe)
@@ -68,13 +76,15 @@ namespace Drinks_app.Repositories
 
             var UpdateCocktailRecipe = from updateRecipe
                                    in _db.CocktailRecipes
-                                       where updateRecipe.Name == cocktailRecipe.Name
-                                       select updateRecipe;
+                                        where updateRecipe.Id == cocktailRecipe.Id
+                                        select updateRecipe;
             foreach(CocktailRecipe recip in UpdateCocktailRecipe)
             {
-                recip.Name = new CocktailRecipe().Name;
-                recip.Recipe = new CocktailRecipe().Recipe;
+                recip.Name = cocktailRecipe.Name;
+                recip.Recipe = cocktailRecipe.Recipe;
             }
+            
+           
             _db.SaveChanges();
             //UpdateCocktailRecipe.is_default = false;
             //Context.SaveChanges();
