@@ -1,7 +1,7 @@
 ﻿using Drinks_app.Data;
+using Drinks_app.Exception;
 using Drinks_app.Models;
 using Drinks_app.Repositories.IRepositories;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -24,22 +24,24 @@ namespace Drinks_app.Repositories
 
         public void DeleteIngredient(long id)
         {
-            var deleteingredients = (from r
+            var deleteIngredients = (from r
                                      in _db.Ingredients
                                      where r.Id == id
                                      select r).
                                      FirstOrDefault();
-                                     
-            if (deleteingredients != null)
+
+            if (deleteIngredients == null) throw new NotFoundException("Ingredients is not found");
+
+            if (deleteIngredients != null)
             {
-                _db.Ingredients.Remove(deleteingredients);
+                _db.Ingredients.Remove(deleteIngredients);
             }
             _db.SaveChanges();
         }
 
         public IEnumerable<Ingredient> GetAllIngredient()
         {
-            var allingredients = from c
+            var allIngredients = from c
                                  in _db.Ingredients
                                  select new Ingredient
                                  {
@@ -47,7 +49,10 @@ namespace Drinks_app.Repositories
                                      Name = c.Name
 
                                  };
-            return allingredients;
+
+            if (allIngredients == null) throw new NotFoundException("Ingredients is not found");
+
+            return allIngredients;
         }
 
         public Ingredient GetIngredientById(long id)
@@ -56,11 +61,18 @@ namespace Drinks_app.Repositories
                                in _db.Ingredients
                                where i.Id == id
                                select i).FirstOrDefault();
+
+            if (ingredients == null) throw new NotFoundException("Ingredients is not found");
+
             return ingredients;
         }
         public Ingredient GetIngredientByName(string name)
         {
-            return _db.Ingredients.Where(i => i.Name == name).FirstOrDefault();
+            var result = _db.Ingredients.Where(i => i.Name == name).FirstOrDefault();
+
+            if (result == null) throw new NotFoundException("Ingredients is not found");
+
+            return result;
         }
 
         public void UpdateIngredient(Ingredient ingredient)
@@ -69,7 +81,10 @@ namespace Drinks_app.Repositories
                                    in _db.Ingredients
                                    where u.Id == ingredient.Id
                                    select u;
-            foreach(Ingredient i in updateIngredient)
+
+            if (updateIngredient == null) throw new NotFoundException("Ingredients is not found");
+
+            foreach (Ingredient i in updateIngredient)
             {
                 i.Name = ingredient.Name;
             }
@@ -80,7 +95,7 @@ namespace Drinks_app.Repositories
         {
             IEnumerable<Ingredient> Ingredients = new Collection<Ingredient>();
             string[] IngredientsArr = IngredientsString.Split(",").Select(i => i.Trim()).ToArray();
-            foreach(string IngredientName in IngredientsArr)
+            foreach (string IngredientName in IngredientsArr)
             {
                 Ingredients.Append(this.GetIngredientByName(IngredientName));
             }
