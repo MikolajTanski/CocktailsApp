@@ -3,6 +3,7 @@ using Drinks_app.Models;
 using Drinks_app.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Drinks_app.Repositories
@@ -22,12 +23,22 @@ namespace Drinks_app.Repositories
 
         }
 
+        //[DataObjectMethod(DataObjectMethodType.Delete)]
         public void DeleteCocktailRecipe(long id)
         {
-            var cocktailRecipe = _db.CocktailRecipes.Find(id);
-            if (cocktailRecipe != null) _db.CocktailRecipes.Remove(cocktailRecipe);
-            _db.SaveChanges();
+            //using (var db = _db.CocktailRecipes()) {
+                var DeleteCocktailRecipe = from recipe
+                                           in _db.CocktailRecipes
+                                           where recipe.Id == id
+                                           select recipe;
+                if (DeleteCocktailRecipe != null)
+                {
+                    _db.CocktailRecipes.Remove((CocktailRecipe)DeleteCocktailRecipe);
+                    _db.SaveChanges();
+                }
+            //}
         }
+
 
         public IEnumerable<CocktailRecipe> GetAllCocktailRecipe()
         {
@@ -44,14 +55,32 @@ namespace Drinks_app.Repositories
 
             public CocktailRecipe GetCocktailRecipeById(long id)
         {
-            var cocktailRecipe = _db.CocktailRecipes.Find(id);
-            return cocktailRecipe;
-        }
 
+            var GetCocktailRecipeById = from i
+                                        in _db.CocktailRecipes
+                                        where i.Id == id
+                                        select i;
+
+            return this.GetCocktailRecipeById(id);
+            
+        }
         public void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe)
         {
-            _db.Entry(cocktailRecipe).State = EntityState.Modified;
+
+            var UpdateCocktailRecipe = from updateRecipe
+                                   in _db.CocktailRecipes
+                                       where updateRecipe.Name == cocktailRecipe.Name
+                                       select updateRecipe;
+            foreach(CocktailRecipe recip in UpdateCocktailRecipe)
+            {
+                recip.Name = new CocktailRecipe().Name;
+                recip.Recipe = new CocktailRecipe().Recipe;
+            }
             _db.SaveChanges();
+            //UpdateCocktailRecipe.is_default = false;
+            //Context.SaveChanges();
         }
-    }
+    } 
 }
+
+
