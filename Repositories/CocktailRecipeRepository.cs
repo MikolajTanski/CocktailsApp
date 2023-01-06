@@ -31,11 +31,18 @@ namespace Drinks_app.Repositories
 
         public IEnumerable<CocktailRecipe> GetAllCocktailRecipe()
         {
-            var cocktailRecipe = _db.CocktailRecipes.Include(r => r.User).ToList();
-            return cocktailRecipe;
+            var AllCocktailRecipes = from c in _db.CocktailRecipes
+                                     select new CocktailRecipe
+                                     {
+                                         Id = c.Id,
+                                         Name = c.Name,
+                                         Recipe = c.Recipe,
+                                         User = c.User,
+                                     };
+            return AllCocktailRecipes;
         }
 
-        public CocktailRecipe GetCocktailRecipeById(long id)
+            public CocktailRecipe GetCocktailRecipeById(long id)
         {
             var cocktailRecipe = _db.CocktailRecipes.Find(id);
             return cocktailRecipe;
