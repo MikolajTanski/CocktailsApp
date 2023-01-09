@@ -30,16 +30,16 @@ namespace Drinks_app.Services
         public void CreateCocktailRecipe(CocktailRecipeDto dto)
         {
             ApplicationUser currentUser = _userManager.FindByEmailAsync(dto.userEmail).Result;
-            ICollection<Ingredient> ingredients = _ingredientRepository.GetIngredientsFromString(dto.Ingredients).ToList();
+            //ICollection<Ingredient> ingredients = _ingredientRepository.GetIngredientsFromString(dto.Ingredients).ToList();
             var newCocktailRecipe = new CocktailRecipe
             {
                 Name = dto.Name,
                 Recipe = dto.Recipe,
-                Ingredients = ingredients,
+               // Ingredients = ingredients,
                 User = currentUser
             };
             _cocktailRecipeRepository.CreateCocktailRecipe(newCocktailRecipe);
-            _ingredientRepository.AddMissingIngredients(ingredients);
+            //_ingredientRepository.AddMissingIngredients(ingredients);
         }
 
         public void DeleteCocktailRecipe(long id)
