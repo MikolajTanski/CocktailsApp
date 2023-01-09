@@ -51,6 +51,7 @@ namespace Drinks_app.Repositories
                                          Name = c.Name,
                                          Recipe = c.Recipe,
                                          User = c.User,
+                                         Ingredients = c.Ingredients
                                      };
 
             if (allCocktailRecipes == null) throw new NotFoundException("Cocktail Recipe is not found");
