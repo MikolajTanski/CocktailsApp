@@ -2,6 +2,7 @@
 using Drinks_app.Exception;
 using Drinks_app.Models;
 using Drinks_app.Repositories.IRepositories;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -42,7 +43,7 @@ namespace Drinks_app.Repositories
         public IEnumerable<Ingredient> GetAllIngredient()
         {
             var allIngredients = from c
-                                 in _db.Ingredients
+                                 in _db.Ingredients.AsNoTracking()
                                  select new Ingredient
                                  {
                                      Id = c.Id,
@@ -59,6 +60,7 @@ namespace Drinks_app.Repositories
         {
             var ingredients = (from i
                                in _db.Ingredients
+                               .AsNoTracking()
                                where i.Id == id
                                select i).FirstOrDefault();
 
@@ -68,7 +70,7 @@ namespace Drinks_app.Repositories
         }
         public Ingredient GetIngredientByName(string name)
         {
-            var result = _db.Ingredients.Where(i => i.Name == name).FirstOrDefault();
+            var result = _db.Ingredients.Where(i => i.Name == name).AsNoTracking().FirstOrDefault();
 
             if (result == null) throw new NotFoundException("Ingredients is not found");
 
@@ -92,9 +94,9 @@ namespace Drinks_app.Repositories
         }
         public void AddMissingIngredients(ICollection<Ingredient> ingredients)
         {
-            var knownIngredients = this.GetAllIngredient().ToList();
+            var knownIngredients = GetAllIngredient().ToList();
             var missingIngredients = ingredients.Except(knownIngredients).ToList();
-            foreach(var ingredient in missingIngredients)
+            foreach (var ingredient in missingIngredients)
             {
                 this.CreateIngredient(ingredient);
             }
@@ -106,7 +108,7 @@ namespace Drinks_app.Repositories
             string[] IngredientsArr = IngredientsString.Split(",").Select(i => i.Trim()).ToArray();
             foreach (string IngredientName in IngredientsArr)
             {
-                Ingredients.Append(this.GetIngredientByName(IngredientName));
+                Ingredients.Append(GetIngredientByName(IngredientName));
             }
 
             return Ingredients;
