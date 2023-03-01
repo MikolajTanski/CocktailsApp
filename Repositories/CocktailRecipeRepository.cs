@@ -5,6 +5,7 @@ using Drinks_app.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Drinks_app.Repositories
 {
@@ -72,6 +73,17 @@ namespace Drinks_app.Repositories
             return getCocktailRecipeById;
 
         }
+
+        public IEnumerable<CocktailRecipe> SearchCocktailRecipeByIngredient(List<Ingredient> ingredients)
+        {
+
+            var testIngredient = _db.Ingredients.Where(i => i.Name == "Lemon").AsNoTracking().FirstOrDefault();
+            var foundRecipes = _db.CocktailRecipes.Include(c => c.Ingredients).Where(i => i.Ingredients.Contains(testIngredient)).ToList();
+
+            return foundRecipes;
+
+        }
+
         public void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe)
         {
 
@@ -80,7 +92,7 @@ namespace Drinks_app.Repositories
                                        where updateRecipe.Id == cocktailRecipe.Id
                                        select updateRecipe;
 
-            if (updateCocktailRecipe == null) throw new NotFoundException("Cocktail Recipe is not found");
+            //if (updateCocktailRecipe == null) throw new NotFoundException("Cocktail Recipe is not found");
 
             foreach (CocktailRecipe recip in updateCocktailRecipe)
             {
