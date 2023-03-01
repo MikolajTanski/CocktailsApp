@@ -8,9 +8,9 @@ namespace Drinks_app.Repositories.IRepositories
         void UpdateIngredient(Ingredient ingredient);
         Ingredient GetIngredientById(long id);
         IEnumerable<Ingredient> GetAllIngredient();
-        IEnumerable<Ingredient> GetIngredientsFromString(string IngredientsString);
         void CreateIngredient(Ingredient ingredient);
         void AddMissingIngredients(ICollection<Ingredient> ingredients);
         void DeleteIngredient(long id);
+        public Ingredient GetIngredientByName(string name);
     }
 }
