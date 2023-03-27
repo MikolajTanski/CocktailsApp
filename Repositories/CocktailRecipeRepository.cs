@@ -1,11 +1,13 @@
-﻿using Drinks_app.Data;
+﻿using Drinks_app.Controllers;
+using Drinks_app.Data;
 using Drinks_app.Exception;
 using Drinks_app.Models;
 using Drinks_app.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
+using Drinks_app.Services.Helpers;
 
 namespace Drinks_app.Repositories
 {
@@ -74,15 +76,31 @@ namespace Drinks_app.Repositories
 
         }
 
+
         public IEnumerable<CocktailRecipe> SearchCocktailRecipeByIngredient(List<Ingredient> ingredients)
         {
+            IList<CocktailRecipe> foundRecipes = new List<CocktailRecipe>();
 
-            var testIngredient = _db.Ingredients.Where(i => i.Name == "Lemon").AsNoTracking().FirstOrDefault();
-            var foundRecipes = _db.CocktailRecipes.Include(c => c.Ingredients).Where(i => i.Ingredients.Contains(testIngredient)).ToList();
+            foreach(var recipe in _db.CocktailRecipes.Include(c => c.Ingredients).ToList())
+            {
+                var recipeIngredients = recipe.Ingredients.ToList();
+                var foundIngredients = recipeIngredients.Intersect(ingredients, new IngredientsComparer());
+                if (foundIngredients.Any())
+                {
+                    recipe.User = null;
+                    recipe.Ingredients = null;
+
+                    foundRecipes.Add(recipe);
+                }
+            }
+            //delete nesting
+
 
             return foundRecipes;
 
         }
+
+
 
         public void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe)
         {
