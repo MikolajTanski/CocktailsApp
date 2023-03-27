@@ -2,6 +2,8 @@
 using Drinks_app.Repositories.IRepositories;
 using Drinks_app.Services.IServices;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Drinks_app.Services
 {
@@ -38,6 +40,17 @@ namespace Drinks_app.Services
         public void UpdateIngredient(Ingredient ingredient)
         {
             _ingredientRepository.UpdateIngredient(ingredient);
+        }
+        public IEnumerable<Ingredient> GetIngredientsFromString(string IngredientsString)
+        {
+            List<Ingredient> Ingredients = new List<Ingredient>();
+            string[] IngredientsArr = IngredientsString.Split(",").Select(i => i.Trim()).ToArray();
+            foreach (string IngredientName in IngredientsArr)
+            {
+                Ingredients.Add(_ingredientRepository.GetIngredientByName(IngredientName));
+            }
+
+            return Ingredients;
         }
     }
 }

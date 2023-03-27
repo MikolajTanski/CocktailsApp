@@ -10,5 +10,6 @@ namespace Drinks_app.Services.IServices
         void CreateIngredient(Ingredient ingredient);
         void DeleteIngredient(long id);
         void UpdateIngredient(Ingredient ingredient);
+        IEnumerable<Ingredient> GetIngredientsFromString(string IngredientsString);
     }
 }

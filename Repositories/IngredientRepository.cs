@@ -72,7 +72,7 @@ namespace Drinks_app.Repositories
         {
             var result = _db.Ingredients.Where(i => i.Name == name).AsNoTracking().FirstOrDefault();
 
-            if (result == null) throw new NotFoundException("Ingredients is not found");
+            //if (result == null) throw new NotFoundException("Ingredients is not found");
 
             return result;
         }
@@ -102,16 +102,6 @@ namespace Drinks_app.Repositories
             }
         }
 
-        public IEnumerable<Ingredient> GetIngredientsFromString(string IngredientsString)
-        {
-            IEnumerable<Ingredient> Ingredients = new Collection<Ingredient>();
-            string[] IngredientsArr = IngredientsString.Split(",").Select(i => i.Trim()).ToArray();
-            foreach (string IngredientName in IngredientsArr)
-            {
-                Ingredients.Append(GetIngredientByName(IngredientName));
-            }
-
-            return Ingredients;
-        }
+        
     }
 }
