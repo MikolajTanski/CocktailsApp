@@ -2,6 +2,9 @@
 using Drinks_app.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
+using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.Extensions.Logging;
 
 namespace Drinks_app.Data
 {
@@ -20,14 +23,11 @@ namespace Drinks_app.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .AddEnvironmentVariables()
-                .Build();
 
-            if (configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT") == "Development")
-            {
+                var factory = LoggerFactory.Create(builder => builder.AddConsole());
+                optionsBuilder.UseLoggerFactory(factory);
                 optionsBuilder.EnableSensitiveDataLogging();
-            }
+            
         }
     }
 }
