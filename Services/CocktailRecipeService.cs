@@ -14,31 +14,35 @@ namespace Drinks_app.Services
     {
         private readonly ICocktailRecipeRepository _cocktailRecipeRepository;
         private readonly IIngredientRepository _ingredientRepository;
+        private readonly IIngredientService _ingredientService;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public CocktailRecipeService(
             ICocktailRecipeRepository cocktailRecipeRepository,
             UserManager<ApplicationUser> userManager,
-            IIngredientRepository ingredientRepository
+            IIngredientRepository ingredientRepository,
+            IIngredientService ingredientService
             )
         {
             _cocktailRecipeRepository = cocktailRecipeRepository;
             _userManager = userManager;
             _ingredientRepository = ingredientRepository;
+            _ingredientService = ingredientService;
         }
          
         public void CreateCocktailRecipe(CocktailRecipeDto dto)
         {
             ApplicationUser currentUser = _userManager.FindByEmailAsync(dto.userEmail).Result;
-            ICollection<Ingredient> ingredients = _ingredientRepository.GetIngredientsFromString(dto.Ingredients).ToList();
+            //ICollection<Ingredient> ingredients = _ingredientRepository.GetIngredientsFromString(dto.Ingredients).ToList();
             var newCocktailRecipe = new CocktailRecipe
             {
                 Name = dto.Name,
-                Recipe = dto.Recipe, 
-                Ingredients = ingredients,
+                Recipe = dto.Recipe,
+               // Ingredients = ingredients,
                 User = currentUser
             };
             _cocktailRecipeRepository.CreateCocktailRecipe(newCocktailRecipe);
+            //_ingredientRepository.AddMissingIngredients(ingredients);
         }
 
         public void DeleteCocktailRecipe(long id)
@@ -56,6 +60,17 @@ namespace Drinks_app.Services
         {
             var result = _cocktailRecipeRepository.GetCocktailRecipeById(id);
             return result;
+        }
+
+        public IEnumerable<CocktailRecipe> SearchCocktailRecipeByIngredient(string ingredients)
+        {
+            var ingredientsEntities = _ingredientService.GetIngredientsFromString(ingredients).ToList();
+            if(ingredientsEntities.Count == 0)
+            {
+                return Enumerable.Empty<CocktailRecipe>();
+            }
+            return _cocktailRecipeRepository.SearchCocktailRecipeByIngredient(ingredientsEntities);
+            
         }
 
         public void UpdateCocktailRecipe(CocktailRecipeDto cocktailRecipeDto)

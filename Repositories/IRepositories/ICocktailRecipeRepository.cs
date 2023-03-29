@@ -8,11 +8,8 @@ namespace Drinks_app.Repositories.IRepositories
         void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe);
         CocktailRecipe GetCocktailRecipeById(long id);
         IEnumerable<CocktailRecipe> GetAllCocktailRecipe();
+        IEnumerable<CocktailRecipe> SearchCocktailRecipeByIngredient(List<Ingredient> ingredients);
         void CreateCocktailRecipe(CocktailRecipe cocktailRecipe);
-       // void DeleteCocktailRecipe(long id);
-        //CocktailRecipe GetCocktailRecipeById(CocktailRecipe c);
-        //void DeleteCocktailRecipe(CocktailRecipe r);
         void DeleteCocktailRecipe(long id);
-        //CocktailRecipe GetCocktailRecipeById(long id);
     }
 }

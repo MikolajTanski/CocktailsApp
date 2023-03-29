@@ -1,9 +1,10 @@
 using Drinks_app.Data;
+using Drinks_app.Middleware;
 using Drinks_app.Models;
-using Drinks_app.Services;
-using Drinks_app.Services.IServices;
 using Drinks_app.Repositories;
 using Drinks_app.Repositories.IRepositories;
+using Drinks_app.Services;
+using Drinks_app.Services.IServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Drinks_app
 {
@@ -31,12 +33,14 @@ namespace Drinks_app
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ErrorHandling>();
             services.AddScoped<ICocktailRecipeService, CocktailRecipeService>();
             services.AddScoped<IIngredientService, IngredientService>();
             services.AddScoped<ICocktailRecipeRepository, CocktailRecipeRepository>();
             services.AddScoped<IIngredientRepository, IngredientRepository>();
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UniversityCocktailsApp", Version = "v1" });
@@ -84,6 +88,7 @@ namespace Drinks_app
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Drinks_app v1"));
             }
+            //app.UseMiddleware<ErrorHandling>();
 
             app.UseHttpsRedirection();
 

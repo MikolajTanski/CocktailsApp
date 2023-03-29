@@ -37,6 +37,12 @@ namespace Drinks_app.Controllers
             return result;
         }
 
+        [HttpGet("search/{ingredients}")]
+        public IEnumerable<CocktailRecipe> SearchRecipesByIngredients(string ingredients)
+        {
+            return _cocktailRecipeService.SearchCocktailRecipeByIngredient(ingredients);
+        }
+
         // POST api/<CocktailRecipesController>
         [HttpPost]
         [Authorize]

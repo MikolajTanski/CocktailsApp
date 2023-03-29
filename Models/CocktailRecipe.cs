@@ -8,7 +8,7 @@ namespace Drinks_app.Models
         public string Name { get; set; }
         public string Recipe { get; set; }
         public ApplicationUser User { get; set; }
-        public ICollection<Ingredient> Ingredients { get; set; }
+        public virtual ICollection<Ingredient> Ingredients { get; set; }
 
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Drinks_app.Middleware
 {
-    public class ErrorHandling
+    public class ErrorHandling : IMiddleware
     {
         private readonly ILogger<ErrorHandling> _logger;
         public ErrorHandling(ILogger<ErrorHandling> logger)
