@@ -39,6 +39,8 @@ namespace Drinks_app
             services.AddScoped<ICocktailRecipeRepository, CocktailRecipeRepository>();
             services.AddScoped<IIngredientRepository, IngredientRepository>();
             services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<ICourseContentRepository, CourseContentRepository>();
+            services.AddScoped<ICourseHeaderRepository, CourseHeaderRepository>();
 
             services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
