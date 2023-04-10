@@ -1,11 +1,22 @@
-﻿using Drinks_app.Models;
+﻿using Drinks_app.Data;
+using Drinks_app.Models;
 using Drinks_app.Repositories.IRepositories;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Drinks_app.Repositories
 {
     public class CourseHeaderRepository : ICourseHeaderRepository
     {
+        private readonly ApplicationDbContext _db;
+
+        public CourseHeaderRepository(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         public void CreateCourseHeader(CourseHeader courseHeader)
         {
             throw new System.NotImplementedException();
@@ -21,9 +32,9 @@ namespace Drinks_app.Repositories
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<CourseHeader> GetCourseHeaders()
+        public async Task<IEnumerable<CourseHeader>> GetCourseHeaders()
         {
-            throw new System.NotImplementedException();
+            return await _db.CourseHeaders.ToListAsync();
         }
 
         public void UpdateCourseHeader(CourseHeader courseHeader)
