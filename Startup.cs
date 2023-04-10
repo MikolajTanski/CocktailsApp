@@ -42,6 +42,9 @@ namespace Drinks_app
             services.AddScoped<ICourseContentRepository, CourseContentRepository>();
             services.AddScoped<ICourseHeaderRepository, CourseHeaderRepository>();
 
+            services.AddAutoMapper(typeof(Startup));
+
+
             services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddSwaggerGen(c =>
