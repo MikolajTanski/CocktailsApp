@@ -11,12 +11,12 @@ namespace Drinks_app.Controllers
     [ApiController]
     public class CoursesController : ControllerBase
     {
-        /*private readonly ICourseService _courseService;
+        private readonly ICourseService _courseService;
 
         public CoursesController(ICourseService courseService)
         {
             _courseService = courseService;
-        }*/
+        }
 
         [HttpGet]
         public IEnumerable<CourseHeader> GetAll()
@@ -38,5 +38,7 @@ namespace Drinks_app.Controllers
             return courses;
             //return _courseService.GetAll();
         }
+
+        
     }
 }
