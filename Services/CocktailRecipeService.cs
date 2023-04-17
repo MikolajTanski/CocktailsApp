@@ -73,10 +73,15 @@ namespace Drinks_app.Services
             
         }
 
-        public void UpdateCocktailRecipe(CocktailRecipeDto cocktailRecipeDto)
+        public void UpdateCocktailRecipe(CocktailRecipeDto cocktailRecipeDto, long id)
         {
-            CocktailRecipe cocktailRecipe= new CocktailRecipe();  //yet to implement
-            _cocktailRecipeRepository.UpdateCocktailRecipe(cocktailRecipe);
+            var oldRecipe = _cocktailRecipeRepository.GetCocktailRecipeById(id);
+
+            oldRecipe.Name = cocktailRecipeDto.Name;
+            oldRecipe.Recipe = cocktailRecipeDto.Recipe;
+
+
+            _cocktailRecipeRepository.UpdateCocktailRecipe(oldRecipe);
         }
     }
 }

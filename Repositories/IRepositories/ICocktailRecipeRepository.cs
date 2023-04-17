@@ -7,6 +7,7 @@ namespace Drinks_app.Repositories.IRepositories
     {
         void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe);
         CocktailRecipe GetCocktailRecipeById(long id);
+        CocktailRecipe GetCocktailRecipeByName(string name);
         IEnumerable<CocktailRecipe> GetAllCocktailRecipe();
         IEnumerable<CocktailRecipe> SearchCocktailRecipeByIngredient(List<Ingredient> ingredients);
         void CreateCocktailRecipe(CocktailRecipe cocktailRecipe);

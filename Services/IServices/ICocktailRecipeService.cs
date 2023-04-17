@@ -12,6 +12,6 @@ namespace Drinks_app.Services.IServices
 
         void CreateCocktailRecipe(CocktailRecipeDto cocktailRecipeDto);
         void DeleteCocktailRecipe(long id);
-        void UpdateCocktailRecipe(CocktailRecipeDto cocktailRecipeDto);
+        void UpdateCocktailRecipe(CocktailRecipeDto cocktailRecipeDto, long id);
     }
 }
