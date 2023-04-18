@@ -39,8 +39,7 @@ namespace Drinks_app
             services.AddScoped<ICocktailRecipeRepository, CocktailRecipeRepository>();
             services.AddScoped<IIngredientRepository, IngredientRepository>();
             services.AddScoped<ICourseService, CourseService>();
-            services.AddScoped<ICourseContentRepository, CourseContentRepository>();
-            services.AddScoped<ICourseHeaderRepository, CourseHeaderRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
 
             services.AddAutoMapper(typeof(Startup));
 

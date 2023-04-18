@@ -8,36 +8,36 @@ using System.Threading.Tasks;
 
 namespace Drinks_app.Repositories
 {
-    public class CourseHeaderRepository : ICourseHeaderRepository
+    public class CourseRepository : ICourseRepository
     {
         private readonly ApplicationDbContext _db;
 
-        public CourseHeaderRepository(ApplicationDbContext db)
+        public CourseRepository(ApplicationDbContext db)
         {
             _db = db;
         }
 
-        public void CreateCourseHeader(CourseHeader courseHeader)
+        public void CreateCourse(Course courseHeader)
         {
             throw new System.NotImplementedException();
         }
 
-        public void DeleteCourseHeader(long id)
+        public void DeleteCourse(long id)
         {
             throw new System.NotImplementedException();
         }
 
-        public CourseHeader GetCourseHeaderById(long id)
+        public Course GetCourseById(long id)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<IEnumerable<CourseHeader>> GetCourseHeaders()
+        public async Task<IEnumerable<Course>> GetCourses()
         {
-            return await _db.CourseHeaders.ToListAsync();
+            return await _db.Courses.ToListAsync();
         }
 
-        public void UpdateCourseHeader(CourseHeader courseHeader)
+        public void UpdateCourse(Course courseHeader)
         {
             throw new System.NotImplementedException();
         }

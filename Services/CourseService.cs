@@ -8,15 +8,13 @@ namespace Drinks_app.Services
 {
     public class CourseService : ICourseService
     {
-        private readonly ICourseHeaderRepository _courseHeadRepo;
-        private readonly ICourseContentRepository _courseContentRepo;
+        private readonly ICourseRepository _courseRepo;
 
         public CourseService(
-            ICourseHeaderRepository courseHeadRepo,
-            ICourseContentRepository courseContentRepo)
+            ICourseRepository courseRepo
+            )
         {
-            _courseHeadRepo = courseHeadRepo;
-            _courseContentRepo = courseContentRepo;
+            _courseRepo = courseRepo;
         }
 
         public void CreateCourse(CourseDto courseDto)

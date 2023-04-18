@@ -19,17 +19,17 @@ namespace Drinks_app.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CourseHeader> GetAll()
+        public IEnumerable<Course> GetAll()
         {
-            List<CourseHeader> courses = new List<CourseHeader>();
-            courses.Add(new CourseHeader
+            List<Course> courses = new List<Course>();
+            courses.Add(new Course
             {
                 Id = 1,
                 Name = "TestCourse1",
                 Description = "TestCourse1 short description",
                 ApplicationUser = null
             });
-            courses.Add(new CourseHeader
+            courses.Add(new Course
             {
                 Id = 2,
                 Name = "TestCourse2",
