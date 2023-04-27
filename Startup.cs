@@ -4,6 +4,7 @@ using Drinks_app.Models;
 using Drinks_app.Repositories;
 using Drinks_app.Repositories.IRepositories;
 using Drinks_app.Services;
+using Drinks_app.Services.Helpers.IdentityRoles;
 using Drinks_app.Services.IServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -31,7 +32,7 @@ namespace Drinks_app
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+        public async void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ErrorHandling>();
             services.AddScoped<ICocktailRecipeService, CocktailRecipeService>();
@@ -55,6 +56,12 @@ namespace Drinks_app
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+            /////
+            var roleBuilder = new IdentityRoleBuilder();
+            roleBuilder.CreateRole(services, "Admin").Wait();
+            roleBuilder.CreateRole(services, "SuperAdmin").Wait();
+            /////
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
