@@ -4,14 +4,16 @@ using Drinks_app.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Drinks_app.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230404153651_Elearning")]
+    partial class Elearning
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,7 +142,30 @@ namespace Drinks_app.Migrations
                     b.ToTable("CocktailRecipes");
                 });
 
-            modelBuilder.Entity("Drinks_app.Models.Course", b =>
+            modelBuilder.Entity("Drinks_app.Models.CourseContent", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ContentNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CourseHeaderId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseHeaderId");
+
+                    b.ToTable("CourseContents");
+                });
+
+            modelBuilder.Entity("Drinks_app.Models.CourseHeader", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -152,9 +177,6 @@ namespace Drinks_app.Migrations
 
                     b.Property<long?>("CategoryId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -168,7 +190,7 @@ namespace Drinks_app.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("CourseHeaders");
                 });
 
             modelBuilder.Entity("Drinks_app.Models.Ingredient", b =>
@@ -341,7 +363,16 @@ namespace Drinks_app.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Drinks_app.Models.Course", b =>
+            modelBuilder.Entity("Drinks_app.Models.CourseContent", b =>
+                {
+                    b.HasOne("Drinks_app.Models.CourseHeader", "CourseHeader")
+                        .WithMany()
+                        .HasForeignKey("CourseHeaderId");
+
+                    b.Navigation("CourseHeader");
+                });
+
+            modelBuilder.Entity("Drinks_app.Models.CourseHeader", b =>
                 {
                     b.HasOne("Drinks_app.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()

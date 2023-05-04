@@ -20,7 +20,8 @@ namespace Drinks_app.Data
         }
         public DbSet<CocktailRecipe> CocktailRecipes { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
-
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Category> Categories { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 

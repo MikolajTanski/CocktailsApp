@@ -2,6 +2,7 @@
 using Drinks_app.Data;
 using Drinks_app.Exception;
 using Drinks_app.Models;
+using Drinks_app.Models.DTO;
 using Drinks_app.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -76,6 +77,10 @@ namespace Drinks_app.Repositories
 
         }
 
+        public CocktailRecipe GetCocktailRecipeByName(string name)
+        {
+            return _db.CocktailRecipes.Where(r => r.Name == name).FirstOrDefault();
+        }
 
         public IEnumerable<CocktailRecipe> SearchCocktailRecipeByIngredient(List<Ingredient> ingredients)
         {
@@ -105,18 +110,20 @@ namespace Drinks_app.Repositories
         public void UpdateCocktailRecipe(CocktailRecipe cocktailRecipe)
         {
 
-            var updateCocktailRecipe = from updateRecipe
-                                   in _db.CocktailRecipes
-                                       where updateRecipe.Id == cocktailRecipe.Id
-                                       select updateRecipe;
+            /* var updateCocktailRecipe = from updateRecipe
+                                    in _db.CocktailRecipes
+                                        where updateRecipe.Id == cocktailRecipe.Id
+                                        select updateRecipe;
 
-            //if (updateCocktailRecipe == null) throw new NotFoundException("Cocktail Recipe is not found");
+             //if (updateCocktailRecipe == null) throw new NotFoundException("Cocktail Recipe is not found");
 
-            foreach (CocktailRecipe recip in updateCocktailRecipe)
-            {
-                recip.Name = cocktailRecipe.Name;
-                recip.Recipe = cocktailRecipe.Recipe;
-            }
+             foreach (CocktailRecipe recip in updateCocktailRecipe)
+             {
+                 recip.Name = cocktailRecipe.Name;
+                 recip.Recipe = cocktailRecipe.Recipe;
+             }*/
+
+            _db.CocktailRecipes.Update(cocktailRecipe);
 
             _db.SaveChanges();
         }

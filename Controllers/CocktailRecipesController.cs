@@ -52,10 +52,11 @@ namespace Drinks_app.Controllers
         }
 
         // PUT api/<CocktailRecipesController>
-        [HttpPut]
-        public void Put([FromBody] CocktailRecipeDto cocktailRecipe)
+        [HttpPut("{id}")]
+        [Authorize]
+        public void Put( CocktailRecipeDto cocktailRecipeDto, long id)
         {
-            _cocktailRecipeService.UpdateCocktailRecipe(cocktailRecipe);
+            _cocktailRecipeService.UpdateCocktailRecipe(cocktailRecipeDto, id);
         }
 
         // DELETE api/<CocktailRecipesController>/5
