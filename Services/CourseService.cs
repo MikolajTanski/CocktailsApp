@@ -3,6 +3,8 @@ using Drinks_app.Models.DTO;
 using Drinks_app.Services.IServices;
 using Drinks_app.Repositories.IRepositories;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Drinks_app.Exception;
 
 namespace Drinks_app.Services
 {
@@ -10,36 +12,48 @@ namespace Drinks_app.Services
     {
         private readonly ICourseRepository _courseRepo;
 
-        public CourseService(
-            ICourseRepository courseRepo
-            )
+        public CourseService(ICourseRepository courseRepo)
         {
             _courseRepo = courseRepo;
         }
 
-        public void CreateCourse(CourseDto courseDto)
+        public async Task CreateCourse(Course course)
         {
-            throw new System.NotImplementedException();
+            await _courseRepo.CreateCourse(course);
         }
 
-        public void DeleteCourse(long id)
+        public async Task DeleteCourse(long id)
         {
-            throw new System.NotImplementedException();
+            await _courseRepo.DeleteCourse(id);
         }
 
-        public CourseDto GetCourseById(long id)
+        public async Task<Course> GetCourseById(long id)
         {
-            throw new System.NotImplementedException();
+            var result = await _courseRepo.GetCourseById(id);
+
+            if (result == null)
+            {
+                throw new NotFoundException("Course not found.");
+            }
+
+            return result;
         }
 
-        public IEnumerable<CourseDto> GetCourses()
+        public async Task<IEnumerable<Course>> GetCourses()
         {
-            throw new System.NotImplementedException();
+            var result = await _courseRepo.GetCourses();
+
+            if (result == null) 
+            {
+                throw new NotFoundException("Course not found.");
+            }
+
+            return result;
         }
 
-        public void UpdateCourse(CourseDto courseDto)
+        public async Task UpdateCourse(Course course)
         {
-            throw new System.NotImplementedException();
+            await _courseRepo.UpdateCourse(course);
         }
     }
 }
