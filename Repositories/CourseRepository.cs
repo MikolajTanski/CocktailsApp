@@ -1,4 +1,5 @@
 ﻿using Drinks_app.Data;
+using Drinks_app.Exception;
 using Drinks_app.Models;
 using Drinks_app.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -17,29 +18,42 @@ namespace Drinks_app.Repositories
             _db = db;
         }
 
-        public void CreateCourse(Course courseHeader)
+        public async Task CreateCourse(Course courseHeader)
         {
-            throw new System.NotImplementedException();
+            await _db.Courses.AddAsync(courseHeader);
+            await _db.SaveChangesAsync();
         }
 
-        public void DeleteCourse(long id)
+        public async Task DeleteCourse(long id)
         {
-            throw new System.NotImplementedException();
+            var courseToDelete = await _db.Courses.FindAsync(id);
+
+            if (courseToDelete is null)
+            {
+                throw new NotFoundException("Course not found.");
+            }
+
+            _db.Courses.Remove(courseToDelete);
+            await _db.SaveChangesAsync();
         }
 
-        public Course GetCourseById(long id)
+        public async Task<Course> GetCourseById(long id)
         {
-            throw new System.NotImplementedException();
+            var result = await _db.Courses.FindAsync(id);
+            return result;
         }
 
         public async Task<IEnumerable<Course>> GetCourses()
         {
-            return await _db.Courses.ToListAsync();
+            var result = await _db.Courses.ToListAsync();
+            return result;
         }
 
-        public void UpdateCourse(Course courseHeader)
+        public async Task UpdateCourse(Course courseHeader)
         {
-            throw new System.NotImplementedException();
+            _db.Courses.Update(courseHeader);
+            await _db.SaveChangesAsync();
         }
     }
+
 }
