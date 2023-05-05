@@ -12,5 +12,7 @@ namespace Drinks_app.Services.IServices
         Task<Course> GetCourseById(long id);
         Task<IEnumerable<Course>> GetCourses();
         Task UpdateCourse(Course course);
+        Task<IEnumerable<Course>> GetCoursesWithSubEntieties();
+        Task<IEnumerable<Course>> GetCoursesForSpecyficUser(string userName);
     }
 }

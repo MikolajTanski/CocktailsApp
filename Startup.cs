@@ -1,3 +1,4 @@
+using System;
 using Drinks_app.Data;
 using Drinks_app.Middleware;
 using Drinks_app.Models;
@@ -43,6 +44,15 @@ namespace Drinks_app
             services.AddScoped<ICourseRepository, CourseRepository>();
 
             services.AddAutoMapper(typeof(Startup));
+            
+            services.AddDistributedMemoryCache();
+            //sesja 30 minut dla zalogowanych 
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
 
 
             services.AddControllers().AddJsonOptions(x =>
@@ -100,7 +110,8 @@ namespace Drinks_app
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Drinks_app v1"));
             }
-            //app.UseMiddleware<ErrorHandling>();
+            app.UseMiddleware<ErrorHandling>();
+            app.UseSession();
 
             app.UseHttpsRedirection();
 
