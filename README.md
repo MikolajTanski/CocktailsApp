@@ -1,3 +1,6 @@
+![image](https://user-images.githubusercontent.com/46753299/236558473-b0e47b32-6f2b-4288-ace2-6789fb4c62f1.png)
+
+
 # BARACAD - The Bartender Academy
 
 It is the perfect application for the ones who have a creative mind and enjoy a tasty cocktail done by themselves.
