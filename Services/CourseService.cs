@@ -50,6 +50,30 @@ namespace Drinks_app.Services
 
             return result;
         }
+        
+        public async Task<IEnumerable<Course>> GetCoursesWithSubEntieties()
+        {
+            var result = await _courseRepo.GetCoursesWithSubEntities();
+
+            if (result == null) 
+            {
+                throw new NotFoundException("Course not found.");
+            }
+
+            return result;
+        }
+        
+        public async Task<IEnumerable<Course>>GetCoursesForSpecyficUser(string userName)
+        {
+            var result = await _courseRepo.GetCoursesForSpecyficUser(userName);
+
+            if (result == null) 
+            {
+                throw new NotFoundException("Course not found.");
+            }
+
+            return result;
+        }
 
         public async Task UpdateCourse(Course course)
         {

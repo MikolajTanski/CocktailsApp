@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Drinks_app.Controllers
@@ -21,7 +22,7 @@ namespace Drinks_app.Controllers
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Course>> GetCourseById(long id)
-        {
+        { //user//category
             var course = await _courseService.GetCourseById(id);
 
             return Ok(course);
@@ -31,6 +32,24 @@ namespace Drinks_app.Controllers
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
             var courses = await _courseService.GetCourses();
+            return Ok(courses);
+        }
+        [HttpGet]
+        [Route("WithSubEntities")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetCoursesWithSubEntieties()
+        {
+            var courses = await _courseService.GetCoursesWithSubEntieties();
+            return Ok(courses);
+        }
+        
+        [HttpGet]
+        [Authorize]
+        [Route("GetCoursesForSpecyficUser")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetCoursesForSpecyficUser()
+        {
+            string userName = HttpContext.User.FindFirstValue(ClaimTypes.Name);
+
+            var courses = await _courseService.GetCoursesForSpecyficUser(userName);
             return Ok(courses);
         }
 

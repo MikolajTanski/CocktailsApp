@@ -1,4 +1,5 @@
-﻿using Drinks_app.Data;
+﻿using System;
+using Drinks_app.Data;
 using Drinks_app.Exception;
 using Drinks_app.Models;
 using Drinks_app.Repositories.IRepositories;
@@ -46,6 +47,30 @@ namespace Drinks_app.Repositories
         public async Task<IEnumerable<Course>> GetCourses()
         {
             var result = await _db.Courses.ToListAsync();
+            return result;
+        }
+        public async Task<IEnumerable<Course>> GetCoursesWithSubEntities()
+        {
+            var result = await _db.Courses
+                .Include(c => c.Category)
+                .Include(c => c.ApplicationUser)
+                .ToListAsync();
+            return result;
+        }
+        
+        public async Task<IEnumerable<Course>> GetCoursesForSpecyficUser(string userName)
+        {
+            var id = await _db.Users
+                .Where(u => u.UserName == userName)
+                .Select(u => u.Id)
+                .FirstOrDefaultAsync();
+            
+            var result = await _db.Courses
+                .Include(c => c.Category)
+                .Include(c => c.ApplicationUser)
+                .Where(c => c.ApplicationUser.Id == id)
+                .ToListAsync();
+            
             return result;
         }
 
