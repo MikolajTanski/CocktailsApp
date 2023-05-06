@@ -34,6 +34,7 @@ Open "Tools:--> "NuGet Package Management" --> "Package Manager Console" and wri
 	- Automapper
  	- Serilog
  	- Identity
+	- JWT
  	- Entity Framework
 * Ionic Angular
  	- HttpClient
