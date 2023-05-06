@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
+using Drinks_app.Models.DTO;
 
 namespace Drinks_app.Controllers
 {
@@ -14,10 +16,12 @@ namespace Drinks_app.Controllers
     public class CoursesController : ControllerBase
     {
         private readonly ICourseService _courseService;
+        private readonly IMapper _mapper;
 
-        public CoursesController(ICourseService courseService)
+        public CoursesController(ICourseService courseService, IMapper mapper)
         {
             _courseService = courseService;
+            _mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -29,29 +33,34 @@ namespace Drinks_app.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
+        public async Task<ActionResult<IEnumerable<CourseDto>>> GetCourses()
         {
             var courses = await _courseService.GetCourses();
-            return Ok(courses);
-        }
-        [HttpGet]
-        [Route("WithSubEntities")]
-        public async Task<ActionResult<IEnumerable<Course>>> GetCoursesWithSubEntieties()
-        {
-            var courses = await _courseService.GetCoursesWithSubEntieties();
-            return Ok(courses);
+            var courseDtos = _mapper.Map<List<CourseDto>>(courses);
+            return Ok(courseDtos);
         }
         
         [HttpGet]
+        [Route("WithSubEntities")]
+        public async Task<ActionResult<IEnumerable<CourseDto>>> GetCoursesWithSubEntieties()
+        {
+            var courses = await _courseService.GetCoursesWithSubEntieties();
+            var courseDtos = _mapper.Map<List<CourseDto>>(courses);
+            return Ok(courseDtos);
+        }
+
+        [HttpGet]
         [Authorize]
         [Route("GetCoursesForSpecyficUser")]
-        public async Task<ActionResult<IEnumerable<Course>>> GetCoursesForSpecyficUser()
+        public async Task<ActionResult<IEnumerable<CourseDto>>> GetCoursesForSpecyficUser()
         {
             string userName = HttpContext.User.FindFirstValue(ClaimTypes.Name);
 
             var courses = await _courseService.GetCoursesForSpecyficUser(userName);
-            return Ok(courses);
+            var courseDtos = _mapper.Map<List<CourseDto>>(courses);
+            return Ok(courseDtos);
         }
+
 
         [HttpPost]
         public async Task<ActionResult> CreateCourse([FromBody] Course course)

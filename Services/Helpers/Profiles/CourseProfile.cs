@@ -1,13 +1,18 @@
 ﻿using AutoMapper;
 using System.Runtime.CompilerServices;
+using Drinks_app.Models;
+using Drinks_app.Models.DTO;
 
 namespace Drinks_app.Services.Helpers.Profiles
 {
     public class CourseProfile : Profile
     {
-        protected CourseProfile()
+        public CourseProfile()
         {
-             // how to map from 2 classes into 1 DTO 
+            CreateMap<Course, CourseDto>()
+                .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.ApplicationUser))
+                .ReverseMap();
         }
     }
+
 }
