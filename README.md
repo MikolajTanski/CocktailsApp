@@ -9,7 +9,7 @@ BARACAD is an educational application, which offers a variety of courses related
 # Project Status
 BARACAD is still in the development fase in order to make it better and better for our users.
 
-# Requirements
+# Technical Requirements
 In order to run this appplication, it is necessary to have:
 - Visual Studio;
 - NuGet packages such as:
@@ -29,13 +29,24 @@ Install the necessary packages;
 Open "Tools:--> "NuGet Package Management" --> "Package Manager Console" and write "Update-database";
 
 # Technology
-Build with C#;
-LINQ;
-.NetCore;
+* ASP.NET Core
+* Ionic Angular
+* SQLEXPRESS
+
 
 # Copyright and licensing
 
-https://learn.microsoft.com/en-us/
+Copyright © 2023 SzczepanMikołajKarolina. All rights reserved.
+
+Licensed under the Beerware License, Version 42 (the "License");
+you may not use this file except in compliance with the License.
+
+Unless required by applicable law or agreed to in writing, software distributed under the License
+is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+or implied. See the License for the specific language governing permissions and limitations
+under the License.
+
+### The following API is used:
 https://www.thecocktaildb.com/api.php
 
 
