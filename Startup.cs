@@ -85,7 +85,7 @@ namespace Drinks_app
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                                  builder =>
                                  {
-                                     builder.WithOrigins("https://localhost:44335", "http://localhost:4200")
+                                     builder.WithOrigins("https://localhost:44335", "http://localhost:4200", "http://localhost:8100")
                                                          .AllowAnyHeader()
                                                          .AllowAnyMethod();
                                  });
