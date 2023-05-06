@@ -1,15 +1,18 @@
 ﻿using Drinks_app.Models.DTO;
 using Drinks_app.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Drinks_app.Services.IServices
 {
     public interface ICourseService
     {
-        CourseDto GetCourseById(long id);
-        IEnumerable<CourseDto> GetCourses();
-        void CreateCourse(CourseDto courseDto);
-        void DeleteCourse(long id);
-        void UpdateCourse(CourseDto courseDto);
+        Task CreateCourse(Course course);
+        Task DeleteCourse(long id);
+        Task<Course> GetCourseById(long id);
+        Task<IEnumerable<Course>> GetCourses();
+        Task UpdateCourse(Course course);
+        Task<IEnumerable<Course>> GetCoursesWithSubEntieties();
+        Task<IEnumerable<Course>> GetCoursesForSpecyficUser(string userName);
     }
 }

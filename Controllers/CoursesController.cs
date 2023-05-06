@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Drinks_app.Controllers
 {
@@ -18,27 +20,58 @@ namespace Drinks_app.Controllers
             _courseService = courseService;
         }
 
-        [HttpGet]
-        public IEnumerable<Course> GetAll()
-        {
-            List<Course> courses = new List<Course>();
-            courses.Add(new Course
-            {
-                Id = 1,
-                Name = "TestCourse1",
-                Description = "TestCourse1 short description",
-                ApplicationUser = null
-            });
-            courses.Add(new Course
-            {
-                Id = 2,
-                Name = "TestCourse2",
-                Description = "TestCourse2 short description"
-            });
-            return courses;
-            //return _courseService.GetAll();
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Course>> GetCourseById(long id)
+        { //user//category
+            var course = await _courseService.GetCourseById(id);
+
+            return Ok(course);
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
+        {
+            var courses = await _courseService.GetCourses();
+            return Ok(courses);
+        }
+        [HttpGet]
+        [Route("WithSubEntities")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetCoursesWithSubEntieties()
+        {
+            var courses = await _courseService.GetCoursesWithSubEntieties();
+            return Ok(courses);
+        }
         
+        [HttpGet]
+        [Authorize]
+        [Route("GetCoursesForSpecyficUser")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetCoursesForSpecyficUser()
+        {
+            string userName = HttpContext.User.FindFirstValue(ClaimTypes.Name);
+
+            var courses = await _courseService.GetCoursesForSpecyficUser(userName);
+            return Ok(courses);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateCourse([FromBody] Course course)
+        {
+            await _courseService.CreateCourse(course);
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateCourse(long id, [FromBody] Course course)
+        {
+            await _courseService.UpdateCourse(course);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteCourse(long id)
+        {
+            await _courseService.DeleteCourse(id);
+            return Ok();
+        }
     }
 }

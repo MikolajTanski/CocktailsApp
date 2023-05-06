@@ -6,10 +6,13 @@ namespace Drinks_app.Repositories.IRepositories
 {
     public interface ICourseRepository
     {
-        Course GetCourseById(long id);
+        Task<Course> GetCourseById(long id);
         Task<IEnumerable<Course>> GetCourses();
-        void CreateCourse(Course courseHeader);
-        void DeleteCourse(long id);
-        void UpdateCourse(Course courseHeader);
+        Task CreateCourse(Course courseHeader);
+        Task DeleteCourse(long id);
+        Task UpdateCourse(Course courseHeader);
+        Task<IEnumerable<Course>> GetCoursesWithSubEntities();
+        Task<IEnumerable<Course>> GetCoursesForSpecyficUser(string userName);
+
     }
 }
