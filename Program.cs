@@ -2,10 +2,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Compact;
+using Serilog.Formatting.Json;
+using Serilog.Formatting.Compact.Reader;
+using Serilog.Formatting.Display;
+using Serilog.Sinks.Console;
+using Serilog.Sinks.File;
+
 
 namespace Drinks_app
 {
@@ -13,14 +18,21 @@ namespace Drinks_app
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+       public static IHostBuilder CreateHostBuilder(string[] args) =>
+           Host.CreateDefaultBuilder(args)
+               .ConfigureWebHostDefaults(webBuilder =>
+               {
+                   webBuilder.UseStartup<Startup>();
+               })
+               .ConfigureLogging(logging =>
+               {
+                   logging.ClearProviders();
+                   logging.AddSerilog(new LoggerConfiguration()
+                       .WriteTo.Console()
+                       .CreateLogger());
+               });
     }
 }

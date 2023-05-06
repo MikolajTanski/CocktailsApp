@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Drinks_app.Models;
 using Microsoft.AspNetCore.Authorization;
+using Serilog;
 
 
 namespace ContactsAppAPI.Controllers
@@ -51,6 +52,9 @@ namespace ContactsAppAPI.Controllers
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
+                //rejestracja logowania do pliku
+                Log.Information("User {Username} logged in", user.UserName);
+                
                 return Ok(new
                 {
                     username = user.UserName,
@@ -58,6 +62,7 @@ namespace ContactsAppAPI.Controllers
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo
                 });
+
             }
             return Unauthorized("Invalid credentials");
         }
@@ -82,6 +87,10 @@ namespace ContactsAppAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
             }
+            
+            Log.Information("User {Username} registered with email {Email}", model.Username, model.Email);
+
+            
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
     }

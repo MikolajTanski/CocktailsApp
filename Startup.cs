@@ -19,6 +19,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
+using Serilog;
+using Serilog.Events;
 
 namespace Drinks_app
 {
@@ -71,6 +73,14 @@ namespace Drinks_app
             roleBuilder.CreateRole(services, "Admin").Wait();
             roleBuilder.CreateRole(services, "SuperAdmin").Wait();
             /////
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .WriteTo.File("logowanie.txt", rollingInterval: RollingInterval.Month)
+                .WriteTo.File("błędy.txt", restrictedToMinimumLevel: LogEventLevel.Error, rollingInterval: RollingInterval.Month)
+                .CreateLogger();
+
+            /////
 
             services.AddAuthentication(options =>
             {
@@ -110,8 +120,11 @@ namespace Drinks_app
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Drinks_app v1"));
             }
-            app.UseMiddleware<ErrorHandling>();
             app.UseSession();
+            
+            app.UseSerilogRequestLogging(); // Log HTTP requests
+            
+            app.UseMiddleware<ErrorHandling>();
 
             app.UseHttpsRedirection();
 

@@ -8,11 +8,6 @@ namespace Drinks_app.Middleware
 {
     public class ErrorHandling : IMiddleware
     {
-        private readonly ILogger<ErrorHandling> _logger;
-        public ErrorHandling(ILogger<ErrorHandling> logger)
-        {
-            _logger = logger;
-        }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
@@ -30,14 +25,26 @@ namespace Drinks_app.Middleware
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsJsonAsync(notFoundException.Message);
             }
+            catch (ArgumentOutOfRangeException argumentOutOfRangeException)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsJsonAsync(argumentOutOfRangeException.Message);
+            }
+            catch (IndexOutOfRangeException indexOutOfRangeException)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsJsonAsync(indexOutOfRangeException.Message);
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsJsonAsync(invalidOperationException.Message);
+            }
             catch (SystemException e)
             {
-                _logger.LogError(e, e.Message);
-
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsJsonAsync("Something went wrong");
             }
-
         }
     }
 }

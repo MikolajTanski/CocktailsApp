@@ -22,6 +22,8 @@ namespace Drinks_app.Data
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ApplicationUser> User { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
                 var factory = LoggerFactory.Create(builder => builder.AddConsole());
