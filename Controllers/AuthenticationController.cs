@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -53,7 +54,9 @@ namespace ContactsAppAPI.Controllers
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
                 //rejestracja logowania do pliku
-                Log.Information("User {Username} logged in", user.UserName);
+                Log.ForContext("Action", "logging")
+                    .Information("=====> User {Username} logging", model.Username);
+
                 
                 return Ok(new
                 {
@@ -87,11 +90,12 @@ namespace ContactsAppAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
             }
-            
-            Log.Information("User {Username} registered with email {Email}", model.Username, model.Email);
 
-            
-            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+            Log.ForContext("Action", "registration")
+                .Information("=====> User {Username} registered with email {Email}", model.Username, model.Email);
+
+
+                return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
     }
 }

@@ -19,21 +19,19 @@ namespace Drinks_app
         public static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .Enrich.FromLogContext()
+                .MinimumLevel.Information()
                 .WriteTo.Console(new CompactJsonFormatter())
-                .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+                .WriteTo.File(new CompactJsonFormatter(), "logs/log.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
             try
             {
-                Log.Information("BARTENDER Starting up! WOW");
+                Log.Information("Starting up :)");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (System.Exception ex)
             {
-                Log.Fatal(ex, "Application start-up failed :( damm");
+                Log.Fatal(ex, "Application start-up failed :(");
             }
             finally
             {

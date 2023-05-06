@@ -74,10 +74,10 @@ namespace Drinks_app
             roleBuilder.CreateRole(services, "SuperAdmin").Wait();
             /////
              Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.Console()
-                .WriteTo.File("logging/logging-.txt", rollingInterval: RollingInterval.Month)
-                .WriteTo.File("errors/error-.txt", restrictedToMinimumLevel: LogEventLevel.Error, rollingInterval: RollingInterval.Month)
+                 .WriteTo.File("logging/logging-.txt", rollingInterval: RollingInterval.Day)
+                 .WriteTo.File("errors/error-.txt", restrictedToMinimumLevel: LogEventLevel.Error, rollingInterval: RollingInterval.Day)
+                 .WriteTo.File("registration/user-registration.log", rollingInterval: RollingInterval.Day)
+                 .WriteTo.File("logging/user-logging.log", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
             /////
