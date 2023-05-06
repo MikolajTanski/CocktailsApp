@@ -29,11 +29,31 @@ Install the necessary packages;
 Open "Tools:--> "NuGet Package Management" --> "Package Manager Console" and write "Update-database";
 
 # Technology
+* Applicataion Architecture: Backend: REST Api + Frontend: Angular
 * ASP.NET Core
+	- Automapper
+ 	- Serilog
+ 	- Identity
+ 	- Entity Framework
 * Ionic Angular
+ 	- HttpClient
+	- Web Scraping (HTTP request to external API)
 * SQLEXPRESS
 
 
+# Functional requirements
+
+User registration: Users should be able to register for an account on the application. The registration process should collect their basic information, such as name, email address, and password.
+
+Course selection: Users should be able to browse through a list of courses and select the ones they want to take. They should also be able to view detailed descriptions of the courses, such as the course objectives, prerequisites, and duration.
+
+Learning modules: Each course should be divided into modules or lessons that cover specific topics. The application should provide interactive learning materials, such as videos, quizzes, and interactive simulations, to help users learn the content.
+
+Course progress tracking: The application should track each user's progress through the courses and display their completion status. Users should be able to see how much of the course they have completed and which modules they still need to finish.
+
+Course updates: The application should be regularly updated with new courses and learning materials to keep users engaged and up-to-date with the latest trends in the industry.
+
+Mobile compatibility: The application should be accessible from mobile devices, such as smartphones and tablets, to allow users to learn on-the-go.
 # Copyright and licensing
 
 ## MIT License
