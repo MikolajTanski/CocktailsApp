@@ -73,11 +73,11 @@ namespace Drinks_app
             roleBuilder.CreateRole(services, "Admin").Wait();
             roleBuilder.CreateRole(services, "SuperAdmin").Wait();
             /////
-            Log.Logger = new LoggerConfiguration()
+             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Console()
-                .WriteTo.File("logowanie.txt", rollingInterval: RollingInterval.Month)
-                .WriteTo.File("błędy.txt", restrictedToMinimumLevel: LogEventLevel.Error, rollingInterval: RollingInterval.Month)
+                .WriteTo.File("logging/logging-.txt", rollingInterval: RollingInterval.Month)
+                .WriteTo.File("errors/error-.txt", restrictedToMinimumLevel: LogEventLevel.Error, rollingInterval: RollingInterval.Month)
                 .CreateLogger();
 
             /////
@@ -122,11 +122,11 @@ namespace Drinks_app
             }
             app.UseSession();
             
-            app.UseSerilogRequestLogging(); // Log HTTP requests
+             app.UseSerilogRequestLogging(); // Log HTTP requests
             
-            app.UseMiddleware<ErrorHandling>();
-
-            app.UseHttpsRedirection();
+             app.UseMiddleware<ErrorHandling>();
+            
+             app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseCors(MyAllowSpecificOrigins);

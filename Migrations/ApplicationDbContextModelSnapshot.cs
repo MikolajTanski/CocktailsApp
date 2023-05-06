@@ -344,7 +344,7 @@ namespace Drinks_app.Migrations
             modelBuilder.Entity("Drinks_app.Models.Course", b =>
                 {
                     b.HasOne("Drinks_app.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("Drinks_app.Models.Category", "Category")
@@ -405,6 +405,11 @@ namespace Drinks_app.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Drinks_app.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }
